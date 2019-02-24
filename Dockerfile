@@ -6,7 +6,10 @@ ENV PRITUNL_VERSION=${PRITUNL_VERSION}
 ARG MONGODB_VERSION="*"
 ENV MONGODB_VERSION=${MONGODB_VERSION}
 
-LABEL MAINTAINER="Christian Winther <jippignu@gmail.com>"
+ARG WEBGUI_PORT="8080"
+ENV WEBGUI_PORT=${WEBGUI_PORT}
+
+LABEL MAINTAINER="Vini <vini@contentsecurity.com.au>"
 
 COPY --chown=root:root ["docker-install.sh", "/root"]
 RUN bash /root/docker-install.sh
