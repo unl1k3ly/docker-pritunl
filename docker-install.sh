@@ -27,6 +27,8 @@ if [ "${MONGODB_VERSION}" != "no" ]; then
     apt-get -y install mongodb-org=${MONGODB_VERSION};
 fi
 
+pritunl set app.server_port ${WEBGUI_PORT}
+
 apt-get --purge autoremove -y wget
 apt-get clean
 apt-get -y -q autoclean
