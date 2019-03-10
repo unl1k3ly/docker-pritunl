@@ -103,6 +103,7 @@ EOF
 
 fi
 
+# Set admin WEBGUI port
 pritunl set app.server_port ${WEBGUI_PORT}
 
 exec /usr/bin/pritunl start -c /etc/pritunl.conf
