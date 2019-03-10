@@ -1,25 +1,27 @@
 FROM ubuntu:16.04
 
-ARG PRITUNL_VERSION="*"
-ENV PRITUNL_VERSION=${PRITUNL_VERSION}
+# https://api.github.com/repos/pritunl/pritunl/tags
+ARG PRITUNL_VERSION=""
+ENV PRITUNL_VERSION="latest"
 
 ARG MONGODB_VERSION="*"
 ENV MONGODB_VERSION=${MONGODB_VERSION}
 
-ARG WEBGUI_PORT="8080"
+ARG WEBGUI_PORT="9700"
 ENV WEBGUI_PORT=${WEBGUI_PORT}
 
 LABEL MAINTAINER="Vini <vini@contentsecurity.com.au>"
 
 COPY --chown=root:root ["docker-install.sh", "/root"]
+
 RUN bash /root/docker-install.sh
 
 ADD start-pritunl /bin/start-pritunl
 
-EXPOSE 80
+
 EXPOSE 443
-EXPOSE 1194
-EXPOSE 1194/udp
+EXPOSE 1337/udp
+EXPOSE ${WEBGUI_PORT}
 
 ENTRYPOINT ["/bin/start-pritunl"]
 
