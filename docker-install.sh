@@ -20,6 +20,7 @@ apt-get upgrade -y -q
 apt-get dist-upgrade -y -q
 
 if [ "${PRITUNL_VERSION}" == "latest" ]; then
+    apt-get install curl jq -y
     LATEST_TAG=$(curl -s https://api.github.com/repos/pritunl/pritunl/tags | jq -r '.[].name' | sort -n |rev |cut -d ' '  -f 1 |rev |tail -n 1)
     wget --quiet https://github.com/pritunl/pritunl/releases/download/${LATEST_TAG}/pritunl_${LATEST_TAG}-0ubuntu1.xenial_amd64.deb
     dpkg -i pritunl_${LATEST_TAG}-0ubuntu1.xenial_amd64.deb || apt-get -f -y install
@@ -32,9 +33,6 @@ if [ "${PRITUNL_VERSION}" != "latest" ]; then
     rm pritunl_${PRITUNL_VERSION}-0ubuntu1.xenial_amd64.deb
 fi
 
-wget --quiet https://github.com/pritunl/pritunl/releases/download/${PRITUNL_VERSION}/pritunl_${PRITUNL_VERSION}-0ubuntu1.xenial_amd64.deb
-dpkg -i pritunl_${PRITUNL_VERSION}-0ubuntu1.xenial_amd64.deb || apt-get -f -y install
-rm pritunl_${PRITUNL_VERSION}-0ubuntu1.xenial_amd64.deb
 
 if [ "${MONGODB_VERSION}" != "no" ]; then
     apt-get -y install mongodb-org=${MONGODB_VERSION};
